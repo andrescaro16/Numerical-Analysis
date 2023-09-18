@@ -134,4 +134,6 @@ venv/
 
 # Ignorar la base de datos
 db.sqlite3
+
+# Ignorar el gitignore
 .gitignore
