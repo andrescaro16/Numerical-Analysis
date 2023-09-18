@@ -131,3 +131,7 @@ dist
 
 # Ignorar el entorno virtual
 venv/
+
+# Ignorar la base de datos
+db.sqlite3
+.gitignore
