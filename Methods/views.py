@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .PCM import Regla_Falsa
+from .PCM import Multiple_Roots
 
 
 # Create your views here.
@@ -43,3 +44,26 @@ def graph(request):
     if request.method == 'POST':
         return render(request, 'Methods_Templates/Graph.html',
                       {'titulo': 'Grafica', 'alerta': 'Melo'})
+
+def multiple_roots(request):
+    if request.method == 'GET':
+        return render(request,'Methods_Templates/Multiple_Roots.html',
+                      {'titulo': 'Raices Multiples', 'alerta': 'Melo'})
+    #fx, xi, tol, k, et
+    if request.method == 'POST' and 'latexinput' in request.POST:
+        try:
+            expresion = request.POST['latexinput']
+            tol = float(request.POST['toleranciam'])
+            xi = float(request.POST['xi'])
+            k = int(request.POST['iteracionm'])
+            et = request.POST['tipoe']
+
+            tupla = Multiple_Roots.multiple_roots(expresion, xi, tol, k, et)
+            return render(request, 'Methods_Templates/Multiple_Roots.html',
+                          {'page': 'Layouts/layout_nav_bar.html', 'expresion': 'Raices Multiples', 'html': tupla[0], 'mensaje_m': tupla[1]})
+        except ValueError as e:
+            return render(request, 'Methods_Templates/Multiple_Roots.html',
+                          {'page': 'Layouts/layout_nav_bar.html', 'mensaje': e, 'alerta': 'Fallo'})
+    else:
+        return render(request, 'Methods_Templates/Multiple_Roots.html',
+                      {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Raices Multiples', 'alerta': 'Melo'})
