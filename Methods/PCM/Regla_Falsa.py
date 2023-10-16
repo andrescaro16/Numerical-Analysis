@@ -1,6 +1,7 @@
 from latex2sympy2 import latex2sympy, latex2latex
 import pandas as pd
 import sympy
+import math
 
 
 def regla_falsa(fx: str, a: float, b: float, et: bool, tol: float, k:int) -> float:
@@ -16,14 +17,16 @@ def regla_falsa(fx: str, a: float, b: float, et: bool, tol: float, k:int) -> flo
         La suma de los dos números.
     """
     tabla = pd.DataFrame(columns=['Valor de a', 'Valor de b', 'Valor de xm', 'Error'])
-    sympy_exp = latex2sympy(fx)
 
     try:
+        sympy_exp = latex2sympy(fx)
         fn = sympy.sympify(sympy_exp)
         fa = fn.subs({'x': a})
         fb = fn.subs({'x': b})
         fa = fa.evalf()
         fb = fb.evalf()
+        if math.isnan(fa) or math.isnan(fb):
+            raise ValueError('La funcion no es valida')
     except:
         raise ValueError('La funcion no es valida')
     if fa * fb > 0:

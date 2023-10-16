@@ -21,8 +21,8 @@ footer {
     margin-right: 5%;
     margin-top: 3%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Creará }2 columnas de tamaño igual */
-    gap: 5%; /* Espacio entre elementos */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5%;
 }
 
 .grid-container .grid-item:first-child {
@@ -33,7 +33,88 @@ footer {
 
 
 #tipoe {
-  width: 100%; /* Ancho del 100% para que ocupe todo el ancho del contenedor */
+  width: 100%;
 }
 
 
+#titulo1 {
+    margin-top: 3%;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 0.5em;
+    display: flex;
+    justify-content: center;
+}
+
+#icono1 {
+    margin-top: 4%;
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 7%;
+}
+
+#icono2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 7%;
+    margin-top: 1%;
+}
+
+#icono3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 7%;
+    margin-top: 1%;
+}
+
+#icono4 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 7%;
+    margin-top: 1%;
+}
+
+#ilera1{
+    margin-left: 9%;
+}
+
+#ilera2{
+    margin-left: 9%;
+}
+
+#ilera3{
+    margin-left: 9%;
+}
+
+#ilera4{
+    margin-left: 9%;
+}
+
+.boton-comun {
+  background-color: #20293b;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.boton-comun:hover {
+  background-color: #151a22;
+  color: #ffffff;
+}
+
+.boton-comun:active {
+  background-color: #101418;
+  color: #ffffff;
+  box-shadow: 0 0 10px #20293b;
+}
+
+#concal{
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+}
