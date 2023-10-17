@@ -31,6 +31,12 @@
     </form>
       <button class="boton-comun" style="margin: 15px;">Metodo</button>
       <button class="boton-comun" style="margin: 15px;">Metodo</button>
+      <form method="GET" action="{% url 'incremental_search' %}">
+        <button class="boton-comun" style="margin: 15px;">Busqueda incremental</button>
+      </form>
+      <form method="GET" action="{% url 'newton_rapshon' %}">
+        <button class="boton-comun" style="margin: 15px;">Newton rapshon</button>
+      </form>
     </div>
 </div>
 
