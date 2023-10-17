@@ -29,7 +29,10 @@
         {% csrf_token %}
       <button class="boton-comun" style="margin: 15px;">Regla Falsa</button>
     </form>
-      <button class="boton-comun" style="margin: 15px;">Metodo</button>
+    <form method="GET" action="{% url 'Raices Multiples' %}">
+        {% csrf_token %}
+      <button class="boton-comun" style="margin: 15px;">Raices Multiples</button>
+    </form>
       <button class="boton-comun" style="margin: 15px;">Metodo</button>
       <form method="GET" action="{% url 'incremental_search' %}">
         <button class="boton-comun" style="margin: 15px;">Busqueda incremental</button>
