@@ -13,5 +13,9 @@ urlpatterns = [
     #Url para metodo de busqueda incremental
     path('newtonRapshon/', newton_rapshon, name='newton_rapshon'),
     #Url para el metodo de raices multiples
-    path('raices_multiples/', multiple_roots, name='Raices Multiples')
+    path('raices_multiples/', multiple_roots, name='Raices Multiples'),
+    #Url para el metodo de la secante
+    path('Secante/', secante, name='Secante'),
+    #Url para el metodo de la biseccion
+    path('Biseccion/', biseccion, name='Biseccion'),
 ]

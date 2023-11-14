@@ -33,13 +33,22 @@
         {% csrf_token %}
       <button class="boton-comun" style="margin: 15px;">Raices Multiples</button>
     </form>
-      <button class="boton-comun" style="margin: 15px;">Metodo</button>
+    
       <form method="GET" action="{% url 'incremental_search' %}">
         <button class="boton-comun" style="margin: 15px;">Busqueda incremental</button>
       </form>
+
       <form method="GET" action="{% url 'newton_rapshon' %}">
         <button class="boton-comun" style="margin: 15px;">Newton rapshon</button>
       </form>
+
+      <form method="GET" action="{% url 'Secante' %}">
+        <button class="boton-comun" style="margin: 15px;">Secante</button>
+      </form>
+      <form method="GET" action="{% url 'Biseccion' %}">
+        <button class="boton-comun" style="margin: 15px;">Biseccion</button>
+      </form>
+
     </div>
 </div>
 
@@ -56,7 +65,7 @@
 
 <div>
     <div>
-        <i id='icono4' class="fa fa-bolt">    Interpolación</i>
+        <i id='icono4' class="fa fa-bolt">  Interpolación</i>
     </div>
     <div id='ilera4' class="flex">
       <button class="boton-comun" style="margin: 15px;">Botón 1</button>
