@@ -1,5 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon
+from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Doolitle
 from .PCM import Multiple_Roots
 from .PCM import Secante
 from .PCM import Biseccion
@@ -162,3 +163,25 @@ def biseccion(request):
     else:
         return render(request, 'Methods_Templates/biseccion.html',
                       {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Biseccion', 'alerta': 'Melo'})
+
+
+
+def doolittle(request):
+    if request.method == 'POST':
+        rows = int(request.POST.get('rows'))
+        cols = int(request.POST.get('cols'))
+        
+        matrix = []
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                val = request.POST.get(f'cell_{i}_{j}')
+                row.append(int(val) if val else 0)
+            matrix.append(row)
+        
+        # Llamada a la función doolittle
+        result = Doolitle.doolittle_function(matrix)
+
+        return render(request, 'Methods_Templates/doolitle.html', {'matrix': matrix, 'result': result})
+
+    return render(request, 'Methods_Templates/doolitle.html')

@@ -4,6 +4,9 @@ from .views import *
 urlpatterns = [
     #Home de la aplicación donde se seleccionaran los metodos
     path('', home_view, name='Home'),
+
+    ##--- urlpatterns for chapter 2 ---##
+
     #Url para la vista de regla falsa
     path('regla_falsa/', false_rule, name='Regla Falsa'),
     #Url para el metodo grafico
@@ -18,4 +21,10 @@ urlpatterns = [
     path('Secante/', secante, name='Secante'),
     #Url para el metodo de la biseccion
     path('Biseccion/', biseccion, name='Biseccion'),
+
+    ##--- urlpatterns for chapter 2 ---##
+    
+    #Url para el metodo de la biseccion
+    path('doolitle/', doolittle, name='process_matrix'),
+
 ]
