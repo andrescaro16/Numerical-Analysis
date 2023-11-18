@@ -4,6 +4,8 @@ from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Doolitle
 from .PCM import Multiple_Roots
 from .PCM import Secante
 from .PCM import Biseccion
+from .PCM import Choleski
+
 
 
 # Create your views here.
@@ -165,6 +167,7 @@ def biseccion(request):
                       {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Biseccion', 'alerta': 'Melo'})
 
 
+#------------------ Vistas del segundo capitulo-----------------------
 
 def doolittle(request):
     if request.method == 'POST':
@@ -185,3 +188,22 @@ def doolittle(request):
         return render(request, 'Methods_Templates/doolitle.html', {'matrix': matrix, 'result': result})
 
     return render(request, 'Methods_Templates/doolitle.html')
+
+
+def choleski(request):
+    if request.method == 'POST':
+        rows = int(request.POST.get('rows'))
+        cols = int(request.POST.get('cols'))
+        
+        matrix = []
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                val = request.POST.get(f'cell_{i}_{j}')
+                row.append(int(val) if val else 0)
+            matrix.append(row)
+        result = Choleski.choleski(matrix)
+
+        return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
+
+    return render(request, 'Methods_Templates/Choleski.html')

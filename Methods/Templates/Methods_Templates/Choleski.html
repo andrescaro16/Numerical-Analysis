@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -67,13 +68,13 @@
 <body>
     {% extends 'Layouts/layout_nav_bar.html' %}
 
-    {% block title %}Doolitle{% endblock %}
+    {% block title %}Choleski{% endblock %}
 
     {% block content %}
     <div class="main-container">
         <!-- Left Side: Form -->
         <div class="left-container">
-            <form method="post" action="/doolitle/">
+            <form method="post" action="/choleski/">
                 {% csrf_token %}
                 <div class="section">
                     <input type="number" name="rows" placeholder="Filas" id="rows" class="form-control mb-3" required>
@@ -91,7 +92,7 @@
         </div>
         <!-- Right Side: Results -->
         <div class="results-container right-container">
-            <h1>Resultado de Doolittle</h1>
+            <h1>Resultado de Choleski</h1>
 
             <div class="section">
                 <h2>Matriz recibida:</h2>
@@ -110,7 +111,7 @@
                 <h2>Resultado L:</h2>
                 <div class="result-matrix">
                     <table>
-                        {% for row in result.0 %}
+                        {% for row in result %}
                         <tr>
                             {% for val in row %}
                             <td>{{ val }}</td>
@@ -120,20 +121,6 @@
                     </table>
                 </div>
             </div>
-
-            <div class="section">
-                <h2>Resultado U:</h2>
-                <div class="result-matrix">
-                    <table>
-                        {% for row in result.1 %}
-                        <tr>
-                            {% for val in row %}
-                            <td>{{ val }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
             </div>
         </div>
     </div>
@@ -177,3 +164,5 @@
 </body>
 
 </html>
+
+

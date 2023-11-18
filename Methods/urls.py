@@ -24,7 +24,10 @@ urlpatterns = [
 
     ##--- urlpatterns for chapter 2 ---##
     
-    #Url para el metodo de la biseccion
+    #Url para el metodo de doolitle
     path('doolitle/', doolittle, name='process_matrix'),
+
+    #Url para el metodo de Choleski
+    path('choleski/', choleski, name='choleski_matrix')
 
 ]

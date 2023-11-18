@@ -59,9 +59,20 @@
     <i id='icono3' class="fa fa-sort-numeric-up"> Solución de sistemas de ecuaciones</i>
   </div>
   <div id='ilera3' class="flex">
+
     <form method="GET" action="{% url 'process_matrix' %}">
+
       <button class="boton-comun" style="margin: 15px;">Doolitle</button>
-    </form> <button class="boton-comun" style="margin: 15px;">Metodo</button>
+
+
+    </form> 
+    
+    <form method="GET" action="{% url 'choleski_matrix' %}">
+
+      <button class="boton-comun" style="margin: 15px;">Choleski</button>
+
+    </form> 
+
     <button class="boton-comun" style="margin: 15px;">Metodo</button>
   </div>
 </div>
