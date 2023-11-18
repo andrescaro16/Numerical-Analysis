@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
-from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon
-from .PCM import Multiple_Roots
+from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point
 
 
-# Create your views here.
-'''def false_rule(request):
+# -------------------------------------- Homepage --------------------------------------
+def home_view(request):
     if request.method == 'GET':
-        return render(request, 'Methods_Templates/FalseRule.html')'''
+        return render(request,'Methods_Templates/Home.html',
+                              {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Home', 'alerta': 'Melo'})
 
+
+# --------------------------------------- Methods --------------------------------------
 def false_rule(request):
     if request.method == 'GET':
         return render(request,'Methods_Templates/FalseRule.html',
@@ -77,19 +79,6 @@ def newton_rapshon(request):
         return render(request, 'Methods_Templates/newtonRapshon.html',
                       {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'newton Rapshon Method', 'alerta': 'Melo'})
 
-def home_view(request):
-    if request.method == 'GET':
-        return render(request,'Methods_Templates/Home.html',
-                              {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Home', 'alerta': 'Melo'})
-
-def graph(request):
-    if request.method == 'GET':
-        return render(request,'Methods_Templates/Graph.html',
-                              {'titulo': 'Grafica', 'alerta': 'Melo'})
-    if request.method == 'POST':
-        return render(request, 'Methods_Templates/Graph.html',
-                      {'titulo': 'Grafica', 'alerta': 'Melo'})
-
 def multiple_roots(request):
     if request.method == 'GET':
         return render(request,'Methods_Templates/Multiple_Roots.html',
@@ -112,3 +101,36 @@ def multiple_roots(request):
     else:
         return render(request, 'Methods_Templates/Multiple_Roots.html',
                       {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Raices Multiples', 'alerta': 'Melo'})
+
+def fixed_point(request):
+    if request.method == 'GET':
+        return render(request,'Methods_Templates/FixedPoint.html',
+                      {'titulo': 'Punto Fijo', 'alerta': 'Melo'})
+    if request.method == 'POST' and 'latexinput' in request.POST:
+        try:
+            expression = request.POST['latexinput']
+            tol = float(request.POST['toleranciam'])
+            x0 = float(request.POST['xi'])
+            nmax = int(request.POST['iteracionm'])
+            et = request.POST['tipoe']
+
+            tupla = Fixed_Point.fixed_point(expression, x0, tol, nmax, et)
+            return render(request, 'Methods_Templates/FixedPoint.html',
+                          {'page': 'Layouts/layout_nav_bar.html', 'expression': 'Punto Fijo', 'html': tupla[0], 'mensaje_m': tupla[1]})
+        except ValueError as e:
+            return render(request, 'Methods_Templates/FixedPoint.html',
+                          {'page': 'Layouts/layout_nav_bar.html', 'mensaje': e, 'alerta': 'Fallo'})
+    else:
+        return render(request, 'Methods_Templates/FixedPoint.html',
+                      {'page': 'Layouts/layout_nav_bar.html', 'titulo': 'Punto Fijo', 'alerta': 'Melo'})
+
+
+
+# --------------------------------------- Graph --------------------------------------
+def graph(request):
+    if request.method == 'GET':
+        return render(request,'Methods_Templates/Graph.html',
+                              {'titulo': 'Grafica', 'alerta': 'Melo'})
+    if request.method == 'POST':
+        return render(request, 'Methods_Templates/Graph.html',
+                      {'titulo': 'Grafica', 'alerta': 'Melo'})

@@ -1,4 +1,4 @@
-from latex2sympy2 import latex2sympy, latex2latex
+from latex2sympy2 import latex2sympy
 import pandas as pd
 import sympy
 import math
