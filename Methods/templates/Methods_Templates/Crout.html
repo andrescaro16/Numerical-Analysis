@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Doolittle</title>
+    <title>Crout</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         input[type="number"] {
@@ -67,13 +67,13 @@
 <body>
     {% extends 'Layouts/layout_nav_bar.html' %}
 
-    {% block title %}Doolitle{% endblock %}
+    {% block title %}Crout{% endblock %}
 
     {% block content %}
     <div class="main-container">
         <!-- Left Side: Form -->
         <div class="left-container">
-            <form method="post" action="/doolitle/">
+            <form method="post" action="/crout/">
                 {% csrf_token %}
                 <div class="section">
                     <input type="number" name="rows" placeholder="Filas" id="rows" class="form-control mb-3" required>
@@ -91,7 +91,7 @@
         </div>
         <!-- Right Side: Results -->
         <div class="results-container right-container">
-            <h1>Resultado de Doolittle</h1>
+            <h1>Resultado de Crout</h1>
 
             <div class="section">
                 <h2>Matriz recibida:</h2>

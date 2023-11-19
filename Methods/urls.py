@@ -31,5 +31,7 @@ urlpatterns = [
     #Url para el metodo de doolitle
     path('doolitle/', doolittle, name='process_matrix'),
     #Url para el metodo de Choleski
-    path('choleski/', choleski, name='choleski_matrix')
+    path('choleski/', choleski, name='choleski_matrix'),
+    #Url para el metodo de crout
+    path('crout/', crout, name='crout_matrix')
 ]
