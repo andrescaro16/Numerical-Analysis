@@ -25,4 +25,4 @@ def Gauss_Seidel(A, B, X0, tol, iter):
 
     resultado = np.column_stack((np.core.defchararray.add("X", np.arange(1, len(X) + 1).astype(str)), X))
 
-    return resultado
+    return resultado, n

@@ -317,10 +317,10 @@ def gauss_seidel(request):
             tol = float(request.POST.get('tol'))
             iter = int(request.POST.get('iter'))
 
-            result = Gauss_Seidel.Gauss_Seidel(matrix, vector_b, vector_x0, tol, iter)
+            result, n = Gauss_Seidel.Gauss_Seidel(matrix, vector_b, vector_x0, tol, iter)
 
             return render(request, 'Methods_Templates/GausSeidel.html',
-                          {'result': result})
+                          {'result': result, 'iteraciones':n})
         except:
             return render(request, 'Methods_Templates/GausSeidel.html',
                           {'mensaje_m': 'Error en los datos ingresados'})
