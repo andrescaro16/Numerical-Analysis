@@ -33,5 +33,7 @@ urlpatterns = [
     #Url para el metodo de Choleski
     path('choleski/', choleski, name='choleski_matrix'),
     #Url para el metodo de crout
-    path('crout/', crout, name='crout_matrix')
+    path('crout/', crout, name='crout_matrix'),
+    #Url para el metodo de Gauss Seidel
+    path('gauss_seidel/', gauss_seidel, name='gauss_seidel_matrix'),
 ]
