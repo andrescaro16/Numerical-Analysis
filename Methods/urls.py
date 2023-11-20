@@ -44,4 +44,6 @@ urlpatterns = [
     
     #Url para el método de Vandermonde
     path('vandermonde/', vandermonde, name='vandermonde'),
+    #Url para el método de Lagrange
+    path('lagrange/', lagrange, name='lagrange'),
 ]

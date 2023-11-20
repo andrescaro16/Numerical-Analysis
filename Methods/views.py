@@ -13,7 +13,8 @@ from .PCM import (
     Crout, 
     SOR, 
     Gauss_Seidel, 
-    Vandermonde
+    Vandermonde,
+    Lagrange,
 )
 
 
@@ -359,3 +360,17 @@ def vandermonde(request):
         return render(request, 'Methods_Templates/Vandermonde.html', {'X_values': X_values, 'Y_values': Y_values, 'result': result})
 
     return render(request, 'Methods_Templates/Vandermonde.html')
+
+def lagrange(request):
+    if request.method == 'POST':
+        X_values = request.POST.get('X_values')
+        Y_values = request.POST.get('Y_values')
+        
+        X = [float(x) for x in X_values.split(',')]
+        Y = [float(y) for y in Y_values.split(',')]
+        
+        result, divisorL = Lagrange.lagrange(X, Y)
+
+        return render(request, 'Methods_Templates/Lagrange.html', {'X_values': X_values, 'Y_values': Y_values, 'result': str(result), 'divisorL': divisorL})
+
+    return render(request, 'Methods_Templates/Lagrange.html')
