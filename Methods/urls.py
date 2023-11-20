@@ -25,7 +25,6 @@ urlpatterns = [
     #Url para el metodo de la biseccion
     path('Biseccion/', biseccion, name='Biseccion'),
 
-
     ##--- urlpatterns for chapter  ---##
     
     #Url para el metodo de doolitle
@@ -34,6 +33,8 @@ urlpatterns = [
     path('choleski/', choleski, name='choleski_matrix'),
     #Url para el metodo de crout
     path('crout/', crout, name='crout_matrix'),
+    #Url para el metodo de SOR
+    path('SOR/', SOR_method, name='SOR'),
     #Url para el metodo de Gauss Seidel
     path('gauss_seidel/', gauss_seidel, name='gauss_seidel_matrix'),
 ]

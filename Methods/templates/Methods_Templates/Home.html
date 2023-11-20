@@ -36,10 +36,10 @@
       <button class="boton-comun" style="margin: 15px;">Raices Multiples</button>
     </form>
 
-	<form method="GET" action="{% url 'Punto Fijo' %}">
-	  {% csrf_token %}
-	  <button class="boton-comun" style="margin: 15px;">Punto Fijo</button>
-	</form>
+    <form method="GET" action="{% url 'Punto Fijo' %}">
+      {% csrf_token %}
+      <button class="boton-comun" style="margin: 15px;">Punto Fijo</button>
+    </form>
 
     <form method="GET" action="{% url 'incremental_search' %}">
       <button class="boton-comun" style="margin: 15px;">Busqueda incremental</button>
@@ -66,16 +66,20 @@
   <div id='ilera3' class="flex">
 
     <form method="GET" action="{% url 'process_matrix' %}">
-      	<button class="boton-comun" style="margin: 15px;">Doolitle</button>
-    </form> 
-    
-    <form method="GET" action="{% url 'choleski_matrix' %}">
-      	<button class="boton-comun" style="margin: 15px;">Choleski</button>
-    </form> 
+      <button class="boton-comun" style="margin: 15px;">Doolitle</button>
+    </form>
 
-	<form method="GET" action="{% url 'crout_matrix' %}">
-    	<button class="boton-comun" style="margin: 15px;">Crout</button>
-	</form>
+    <form method="GET" action="{% url 'choleski_matrix' %}">
+      <button class="boton-comun" style="margin: 15px;">Choleski</button>
+    </form>
+
+    <form method="GET" action="{% url 'crout_matrix' %}">
+      <button class="boton-comun" style="margin: 15px;">Crout</button>
+    </form>
+
+    <form method="GET" action="{% url 'SOR' %}">
+      <button class="boton-comun" style="margin: 15px;">SOR</button>
+    </form>
   </div>
 </div>
 

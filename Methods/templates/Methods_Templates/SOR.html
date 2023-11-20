@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Método SOR</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        input[type="text"] {
+            border: 1px solid #0f4d8c;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        .matrix-inputs input[type="text"] {
+            width: 50px;
+            height: 35px;
+        }
+
+        .results-container {
+            background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+            margin-right: 100px;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .result-matrix {
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        table,
+        th,
+        td {
+            border: 2px solid black;
+            padding: 8px;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+        }
+
+        .left-container {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .right-container {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    {% extends 'Layouts/layout_nav_bar.html' %}
+    {% block title %}SOR{% endblock %}
+    {% block content %}
+    <div class="main-container">
+        <!-- Left Side: Form -->
+        <div class="left-container">
+            <form method="post" action="/SOR/">
+                {% csrf_token %}
+                <div class="section">
+                    <input type="text" name="rows" placeholder="Filas de A" id="rows_A" class="form-control mb-3"
+                        required>
+                    <input type="text" name="cols" placeholder="Columnas de A" id="cols_A" class="form-control mb-3"
+                        required>
+                    <button type="button" onclick="createMatrix('A')" class="btn btn-primary">Crear Matriz A</button>
+                </div>
+
+                <div id="matrix_A" class="matrix-inputs"></div>
+
+                <p>Vector b (valores se ingresan automaticamente)</p>
+                <div id="vector_b" class="vector-inputs"></div>
+
+                <p>Vector x0 (valores se ingresan automaticamente)</p>
+                <div id="vector_x0" class="vector-inputs"></div>
+
+                <div class="section">
+                    <input type="text" name="Tol" placeholder="Tolerancia" id="Tol" class="form-control mb-3" required>
+                    <input type="number" name="niter" placeholder="Número de Iteraciones" id="niter"
+                        class="form-control mb-3" required>
+                    <input type="text" name="w" placeholder="Parámetro w" id="w" class="form-control mb-3" required>
+                    <button type="submit" class="btn btn-primary">Calcular</button>
+                </div>
+            </form>
+        </div>
+        <!-- Right Side: Results -->
+        <div class="results-container right-container">    
+            <h1>Resultado de SOR</h1>
+            {% if siFallo %}
+                <h4>Fracasó en {{ iterations }} iteraciones</h4>
+            {% endif %}
+
+            <table>
+                <tr>
+                    <th>Vector de Resultado</th>
+                </tr>
+                {% for value in context.result_vector %}
+                <tr>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            {% if not siFallo %}
+                <h2>Número de Iteraciones:</h2>
+                {{ context.iterations }}
+            {% endif %}
+            
+
+         
+
+        </div>
+
+    </div>
+
+
+    <script>
+        function createMatrix(matrixType) {
+            const rows = parseInt(document.getElementById(`rows_${matrixType}`).value);
+            const cols = parseInt(document.getElementById(`cols_${matrixType}`).value);
+
+            if (!rows || !cols) {
+                alert('Ingresa valores válidos para filas y columnas.');
+                return;
+            }
+
+            const matrixDiv = document.getElementById(`matrix_${matrixType}`);
+            matrixDiv.innerHTML = '';
+
+            const table = document.createElement('table');
+
+            for (let i = 0; i < rows; i++) {
+                const tr = document.createElement('tr');
+
+                for (let j = 0; j < cols; j++) {
+                    const td = document.createElement('td');
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = `${matrixType}_${i}_${j}`;
+                    td.appendChild(input);
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+            matrixDiv.appendChild(table);
+
+            // Crear automáticamente los vectores 'b' y 'x0'
+            createVector('b', rows);
+            createVector('x0', rows);
+        }
+
+        function createVector(vectorType, rows) {
+            const vectorDiv = document.getElementById(`vector_${vectorType}`);
+            vectorDiv.innerHTML = '';
+
+            const table = document.createElement('table');
+            const tr = document.createElement('tr');
+
+            for (let i = 0; i < rows; i++) {
+                const td = document.createElement('td');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `${vectorType}_${i}`;
+                td.appendChild(input);
+                tr.appendChild(td);
+            }
+
+            table.appendChild(tr);
+            vectorDiv.appendChild(table);
+        }
+    </script>
+
+    {% endblock %}
+</body>
+
+</html>
