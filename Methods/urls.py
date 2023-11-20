@@ -46,4 +46,6 @@ urlpatterns = [
     path('vandermonde/', vandermonde, name='vandermonde'),
     #Url para el método de Lagrange
     path('lagrange/', lagrange, name='lagrange'),
+    #Url para el método de Newton Interpolante
+    path('newton_interpolante/', newton_interpolante, name='newton_interpolante'),
 ]
