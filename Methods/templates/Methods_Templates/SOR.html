@@ -83,10 +83,10 @@
 
                 <div id="matrix_A" class="matrix-inputs"></div>
 
-                <p>Vector b (valores se ingresan automaticamente)</p>
+                <p>Vector b (Crea la matriz A primero)</p>
                 <div id="vector_b" class="vector-inputs"></div>
 
-                <p>Vector x0 (valores se ingresan automaticamente)</p>
+                <p>Vector x0 (Crea la matriz A primero)</p>
                 <div id="vector_x0" class="vector-inputs"></div>
 
                 <div class="section">
@@ -99,34 +99,39 @@
             </form>
         </div>
         <!-- Right Side: Results -->
-        <div class="results-container right-container">    
-            <h1>Resultado de SOR</h1>
+        <div class="results-container right-container">
+            <!-- Mostrar resultados aquí -->
+            <h1>Resultados de las iteraciones</h1>
             {% if siFallo %}
-                <h4>Fracasó en {{ iterations }} iteraciones</h4>
+            <h4>Fracasó en {{ iterations|length }} iteraciones</h4>
             {% endif %}
-
             <table>
-                <tr>
-                    <th>Vector de Resultado</th>
-                </tr>
-                {% for value in context.result_vector %}
-                <tr>
-                    <td>{{ value }}</td>
-                </tr>
-                {% endfor %}
+                <thead>
+                    <tr>
+                        <th>Iteración</th>
+                        <th>Vector resultante</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for iteration in iterations %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% for value in iteration.0 %}
+                            {{ value }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ iteration.1 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-
-            {% if not siFallo %}
-                <h2>Número de Iteraciones:</h2>
-                {{ context.iterations }}
-            {% endif %}
             
-
-         
-
         </div>
-
     </div>
+
+    <br><br>
 
 
     <script>

@@ -206,15 +206,15 @@ def doolittle(request):
 
 def choleski(request):
     if request.method == 'POST':
-        rows = int(request.POST.get('rows'))
-        cols = int(request.POST.get('cols'))
+        rows = float(request.POST.get('rows'))
+        cols = float(request.POST.get('cols'))
         
         matrix = []
-        for i in range(rows):
+        for i in range(int(rows)):
             row = []
-            for j in range(cols):
+            for j in range(int(cols)):
                 val = request.POST.get(f'cell_{i}_{j}')
-                row.append(int(val) if val else 0)
+                row.append(float(val) if val else 0)
             matrix.append(row)
         result = Choleski.choleski(matrix)
 
@@ -275,19 +275,20 @@ def SOR_method(request):
             cell_value = float(request.POST[cell_name])
             x0.append(cell_value)
         
-
-         
+  
         result = SOR.SOR(x0, A, b, tol, niter, w)
-        context = {
-            'result_vector': result[0],
-            'iterations': result[1], 
-        }
+        iterations, n = result
 
-        if (result[1] > niter):
+        print(n)
+        if n >= niter:
             siFallo = True
+
+        context = {
+            'iterations': iterations,
+            'siFallo': siFallo
+        }
         
-            
-        return render(request, 'Methods_Templates/SOR.html', {'context': context, 'siFallo': siFallo})
+        return render(request, 'Methods_Templates/SOR.html', context)
     
     return render(request, 'Methods_Templates/SOR.html')
     
