@@ -1,0 +1,63 @@
+{% extends 'Layouts/layout_nav_bar.html' %}
+
+{% block title %}Vandermonde{% endblock %}
+
+{% block content %}
+
+<div class="grid-container">
+    <div class="grid-item">
+        <div class="flex justify-center items-center py-3">
+            <form class="w-full max-w-lg" method="POST" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="flex flex-wrap -mx-3 mb-3">
+                    <div class="w-full px-3 my-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                            Valores de X
+                        </label>
+                        <input name="X_values" id="X_values" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Ingresa los valores de X separados por comas" required>
+                        <p class="text-gray-600 text-xs italic">Por ejemplo: 1, 2, 3</p>
+                    </div>
+                    <div class="w-full px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                            Valores de Y
+                        </label>
+                        <input name="Y_values" id="Y_values" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Ingresa los valores de Y separados por comas" required>
+                        <p class="text-gray-600 text-xs italic">Por ejemplo: 3, 5, 7</p>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Run
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="grid-item m-4">
+        {% if mensaje_m %}
+            <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+                <p class="text-sm">{{ mensaje_m }}.</p>
+            </div>
+        {% endif %}
+        {% if result %}
+            <div class="bg-blue-100 border border-blue-500 rounded-md p-4" role="alert">
+                <p class="text-md text-blue-700">El polinomio resultante es: ‎ ‎ ‎ ‎ <strong>{{ result }}</strong></p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function validateForm() {
+    var x_values = document.getElementById("X_values").value.split(",");
+    var y_values = document.getElementById("Y_values").value.split(",");
+    
+    if (x_values.length != y_values.length) {
+        alert("El número de valores de X debe ser igual al número de valores de Y");
+        return false;
+    }
+    return true;
+}
+</script>
+
+{% endblock %}

@@ -87,12 +87,20 @@
   </div>
 </div>
 
+
 <div>
+
   <div>
     <i id='icono4' class="fa fa-bolt"> Interpolación</i>
   </div>
+
   <div id='ilera4' class="flex">
-    <button class="boton-comun" style="margin: 15px;">Botón 1</button>
+
+    <form method="GET" action="{% url 'vandermonde' %}">
+      {% csrf_token %}
+      <button class="boton-comun" style="margin: 15px;">Vandermonde</button>
+    </form>
+
     <button class="boton-comun" style="margin: 15px;">Botón 2</button>
     <button class="boton-comun" style="margin: 15px;">Botón 3</button>
   </div>

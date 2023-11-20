@@ -6,7 +6,7 @@ urlpatterns = [
     path('', home_view, name='Home'),
 
 
-    ##------ urlpatterns for chapter 2 ------##
+    ##------ urlpatterns for chapter 1 ------##
 
     #Url para la vista de regla falsa
     path('regla_falsa/', false_rule, name='Regla Falsa'),
@@ -25,7 +25,8 @@ urlpatterns = [
     #Url para el metodo de la biseccion
     path('Biseccion/', biseccion, name='Biseccion'),
 
-    ##--- urlpatterns for chapter  ---##
+
+    ##--- urlpatterns for chapter 2 ---##
     
     #Url para el metodo de doolitle
     path('doolitle/', doolittle, name='process_matrix'),
@@ -37,4 +38,10 @@ urlpatterns = [
     path('SOR/', SOR_method, name='SOR'),
     #Url para el metodo de Gauss Seidel
     path('gauss_seidel/', gauss_seidel, name='gauss_seidel_matrix'),
+
+
+    ##--- urlpatterns for chapter 3 ---##
+    
+    #Url para el método de Vandermonde
+    path('vandermonde/', vandermonde, name='vandermonde'),
 ]

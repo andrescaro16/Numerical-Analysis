@@ -1,6 +1,20 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point, Doolitle, Secante, Biseccion, Choleski, Crout, SOR, Gauss_Seidel
+from .PCM import (
+    Regla_Falsa, 
+    Busqueda_incremental, 
+    Newton_rapshon, 
+    Multiple_Roots, 
+    Fixed_Point, 
+    Doolitle, 
+    Secante, 
+    Biseccion, 
+    Choleski, 
+    Crout, 
+    SOR, 
+    Gauss_Seidel, 
+    Vandermonde
+)
 
 
 # -------------------------------------- Homepage --------------------------------------
@@ -329,3 +343,19 @@ def gauss_seidel(request):
                           {'mensaje_m': 'Error en los datos ingresados'})
 
     return render(request, 'Methods_Templates/GausSeidel.html')
+
+
+#----------------------------- Views of the third chapter ------------------------------
+def vandermonde(request):
+    if request.method == 'POST':
+        X_values = request.POST.get('X_values')
+        Y_values = request.POST.get('Y_values')
+        
+        X = [float(x) for x in X_values.split(',')]
+        Y = [float(y) for y in Y_values.split(',')]
+        
+        result = Vandermonde.vandermonde(X, Y)
+
+        return render(request, 'Methods_Templates/Vandermonde.html', {'X_values': X_values, 'Y_values': Y_values, 'result': result})
+
+    return render(request, 'Methods_Templates/Vandermonde.html')
