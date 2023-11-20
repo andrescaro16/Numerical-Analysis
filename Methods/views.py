@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point, Doolitle, Secante, Biseccion, Choleski, Crout, SOR
+from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point, Doolitle, Secante, Biseccion, Choleski, Crout, SOR, Gauss_Seidel
 
 
 # -------------------------------------- Homepage --------------------------------------
@@ -226,7 +226,7 @@ def crout(request):
     if request.method == 'POST':
         rows = int(request.POST.get('rows'))
         cols = int(request.POST.get('cols'))
-        
+
         matrix = []
         for i in range(rows):
             row = []
@@ -234,7 +234,7 @@ def crout(request):
                 val = request.POST.get(f'cell_{i}_{j}')
                 row.append(int(val) if val else 0)
             matrix.append(row)
-        
+
         result = Crout.crout(matrix)
 
         return render(request, 'Methods_Templates/Crout.html', {'matrix': matrix, 'result': result})
@@ -263,19 +263,18 @@ def SOR_method(request):
 
         # Obtener el vector b
         b = []
-        for i in range(int(rows)): 
+        for i in range(int(rows)):
             cell_name = f'b_{i}'
             cell_value = float(request.POST[cell_name])
             b.append(cell_value)
 
         # Obtener el vector x0
         x0 = []
-        for i in range(int(rows)): 
+        for i in range(int(rows)):
             cell_name = f'x0_{i}'
             cell_value = float(request.POST[cell_name])
             x0.append(cell_value)
-        
-  
+
         result = SOR.SOR(x0, A, b, tol, niter, w)
         iterations, n = result
 
@@ -291,4 +290,42 @@ def SOR_method(request):
         return render(request, 'Methods_Templates/SOR.html', context)
     
     return render(request, 'Methods_Templates/SOR.html')
-    
+
+def gauss_seidel(request):
+    if request.method == 'POST':
+        try:
+            rows = int(request.POST.get('rows'))
+
+            # Obtener valores de la matriz
+            matrix = []
+            for i in range(rows):
+                row = []
+                for j in range(rows):
+                    val = request.POST.get(f'cell_{i}_{j}')
+                    row.append(int(val) if val else 0)
+                matrix.append(row)
+
+            # Obtener valores del vector B
+            vector_b = []
+            for i in range(rows):
+                val = request.POST.get(f'b_{i}')
+                vector_b.append(int(val) if val else 0)
+
+            # Obtener valores del vector X0
+            vector_x0 = []
+            for i in range(rows):
+                val = request.POST.get(f'x0_{i}')
+                vector_x0.append(int(val) if val else 0)
+
+            tol = float(request.POST.get('tol'))
+            iter = int(request.POST.get('iter'))
+
+            result, n = Gauss_Seidel.Gauss_Seidel(matrix, vector_b, vector_x0, tol, iter)
+
+            return render(request, 'Methods_Templates/GausSeidel.html',
+                          {'result': result, 'iteraciones':n})
+        except:
+            return render(request, 'Methods_Templates/GausSeidel.html',
+                          {'mensaje_m': 'Error en los datos ingresados'})
+
+    return render(request, 'Methods_Templates/GausSeidel.html')
