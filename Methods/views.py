@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point, Doolitle, Secante, Biseccion, Choleski, Crout
+from .PCM import Regla_Falsa, Busqueda_incremental, Newton_rapshon, Multiple_Roots, Fixed_Point, Doolitle, Secante, Biseccion, Choleski, Crout, SOR
 
 
 # -------------------------------------- Homepage --------------------------------------
@@ -186,15 +186,15 @@ def biseccion(request):
 #----------------------------- Views of the second chapter ------------------------------
 def doolittle(request):
     if request.method == 'POST':
-        rows = int(request.POST.get('rows'))
-        cols = int(request.POST.get('cols'))
+        rows = float(request.POST.get('rows'))
+        cols = float(request.POST.get('cols'))
         
         matrix = []
-        for i in range(rows):
+        for i in range(int(rows)):
             row = []
-            for j in range(cols):
+            for j in range(int(cols)):
                 val = request.POST.get(f'cell_{i}_{j}')
-                row.append(int(val) if val else 0)
+                row.append(float(val) if val else 0.0)
             matrix.append(row)
         
         # Llamada a la función doolittle
@@ -240,3 +240,54 @@ def crout(request):
         return render(request, 'Methods_Templates/Crout.html', {'matrix': matrix, 'result': result})
 
     return render(request, 'Methods_Templates/Crout.html')
+
+
+def SOR_method(request):
+    if request.method == 'POST':
+        rows = int(float(request.POST['rows']))
+        cols = int(float(request.POST['cols']))
+        tol = float(request.POST['Tol'])
+        niter = int(request.POST['niter'])
+        w = float(request.POST['w'])
+
+        siFallo = False
+
+        A = []
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                cell_name = f'A_{i}_{j}'
+                cell_value = float(request.POST[cell_name])
+                row.append(cell_value)
+            A.append(row)
+
+        # Obtener el vector b
+        b = []
+        for i in range(int(rows)): 
+            cell_name = f'b_{i}'
+            cell_value = float(request.POST[cell_name])
+            b.append(cell_value)
+
+        # Obtener el vector x0
+        x0 = []
+        for i in range(int(rows)): 
+            cell_name = f'x0_{i}'
+            cell_value = float(request.POST[cell_name])
+            x0.append(cell_value)
+        
+
+         
+        result = SOR.SOR(x0, A, b, tol, niter, w)
+        context = {
+            'result_vector': result[0],
+            'iterations': result[1], 
+        }
+
+        if (result[1] > niter):
+            siFallo = True
+        
+            
+        return render(request, 'Methods_Templates/SOR.html', {'context': context, 'siFallo': siFallo})
+    
+    return render(request, 'Methods_Templates/SOR.html')
+    
