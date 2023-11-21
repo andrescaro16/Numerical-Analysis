@@ -162,9 +162,10 @@ def secante(request):
             x0 = float(request.POST['x0'])
             xi = float(request.POST['xi'])
             k = int(request.POST['iteracionm'])
+            et = request.POST['tipoe']
         
 
-            tupla = Secante.secante(expression, xi, x0, tol, k)
+            tupla = Secante.secante(expression, xi, x0, tol, k,et)
             return render(request, 'Methods_Templates/secante.html',
                           {'page': 'Layouts/layout_nav_bar.html', 'expresion': 'Secante', 'html': tupla[0], 'mensaje_m': tupla[1]})
         except ValueError as e:
@@ -186,8 +187,9 @@ def biseccion(request):
             a = float(request.POST['a'])
             b = float(request.POST['b'])
             k = int(request.POST['iteracionm'])
+            et = request.POST['tipoe']
         
-            tupla = Biseccion.biseccion(expression, a, b, tol, k)
+            tupla = Biseccion.biseccion(expression, a, b, tol, k,et)
             return render(request, 'Methods_Templates/biseccion.html',
                           {'page': 'Layouts/layout_nav_bar.html', 'expresion': 'Biseccion', 'html': tupla[0], 'mensaje_m': tupla[1]})
         except ValueError as e:
@@ -234,7 +236,7 @@ def choleski(request):
         result = Choleski.choleski(matrix)
 
         return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
-
+    
     return render(request, 'Methods_Templates/Choleski.html')
 
 def crout(request):

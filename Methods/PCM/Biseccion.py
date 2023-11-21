@@ -3,39 +3,46 @@ import pandas as pd
 import sympy
 
 
-def biseccion(fx: str, a: float, b: float, tol: float, niter: int) -> tuple:
-    tabla = pd.DataFrame(columns=['Iteraciones', 'a', 'c', 'b', 'f(c)', 'Error'])
+import sympy
 
-    try:
-        sympy_exp = latex2sympy(fx)
-        fn = sympy.sympify(sympy_exp)
-        fa = fn.subs({'x': a}).evalf()
-        fb = fn.subs({'x': b}).evalf()
-    except ValueError as e:
-        return None, f'Error: {e}'
-
-    er = abs(b - a)
+def bisection(fx: str, a: float, b: float, tol: float, niter: int, et: str) -> tuple:
+    x = sympy.symbols('x')
+    f = sympy.sympify(fx)
+    
+    fa = f.subs(x, a)
+    fb = f.subs(x, b)
+    
+    if fa * fb > 0:
+        raise ValueError('La función debe cambiar de signo en el intervalo')
+    
+    if et == 'Decimales Correctos':
+        er = sympy.Abs(b-a)
+    elif et == 'Cifras Significativas':
+        er = sympy.Abs((b-a)/a)
+    else:
+        raise ValueError('Tipo de error no reconocido')
+    
     i = 1
-
-    while i <= niter and er > tol:
-        c = (a + b) / 2
-        fc = fn.subs({'x': c}).evalf()
-
-        if fc == 0:
-            return tabla.to_html(), f'Solución encontrada en x = {c}'
-        if fa * fc < 0:
+    c = a  # Just an initial value, will be updated in the loop
+    
+    while er > tol and i <= niter:
+        c = (a+b)/2
+        fc = f.subs(x, c)
+        
+        if fc == 0 or sympy.Abs(fc) < tol:
+            break
+        elif fa * fc < 0:
             b = c
-            ct = a
+            fb = fc
         else:
             a = c
-            ct = b
-            er = abs(ct - c)
-
-        tabla = tabla._append({'Iteraciones': i, 'a': a, 'c': c, 'b': b, 'f(c)': fc, 'Error': er}, ignore_index=True)
-        html = tabla.to_html
+            fa = fc
+        
+        if et == 'Decimales Correctos':
+            er = sympy.Abs(b-a)
+        elif et == 'Cifras Significativas':
+            er = sympy.Abs((b-a)/a)
+        
         i += 1
-
-    if er < tol:
-        return html, f'El método converge en x = {c}'
-    elif i > niter:
-        return html, f'Solución no encontrada para la tolerancia dada {tol}'
+    
+    return c, i, er
