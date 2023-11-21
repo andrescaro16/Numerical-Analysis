@@ -341,13 +341,17 @@ def gauss_seidel(request):
             tol = float(request.POST.get('tol'))
             iter = int(request.POST.get('iter'))
 
-            result, n = Gauss_Seidel.Gauss_Seidel(matrix, vector_b, vector_x0, tol, iter)
+            result, n, html = Gauss_Seidel.Gauss_Seidel(matrix, vector_b, vector_x0, tol, iter)
+
+            if not Gauss_Seidel.diagonal_dominante(np.array(matrix)) and not Gauss_Seidel.radio_espectral(np.array(matrix)):
+                return render(request, 'Methods_Templates/GausSeidel.html',
+                              {'alerta': 'Fallo', 'mensaje': 'La matriz no es diagonalmente dominante y no cumple con el radio espectral', 'result': result, 'iteraciones':n})
 
             return render(request, 'Methods_Templates/GausSeidel.html',
-                          {'result': result, 'iteraciones':n})
+                          {'result': result, 'iteraciones':n, 'html':html})
         except:
             return render(request, 'Methods_Templates/GausSeidel.html',
-                          {'mensaje_m': 'Error en los datos ingresados'})
+                          {'alerta': 'Fallo', 'mensaje': 'Ha ocurrido un error'})
 
     return render(request, 'Methods_Templates/GausSeidel.html')
 
