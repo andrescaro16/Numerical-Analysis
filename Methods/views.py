@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .PCM import (
+
     Regla_Falsa, 
     Busqueda_incremental, 
     Newton_rapshon, 
@@ -21,6 +22,7 @@ from .PCM import (
     Vandermonde,
     Lagrange,
     Newton_interpolante,
+    JacobiM,
 )
 
 
@@ -227,27 +229,30 @@ def doolittle(request):
 
     return render(request, 'Methods_Templates/doolitle.html')
 
+
 def choleski(request):
     if request.method == 'POST':
+        rows = int(request.POST.get('rows'))
+        cols = int(request.POST.get('cols'))
+        matrix = []
+
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                val = request.POST.get(f'cell_{i}_{j}')
+                row.append(float(val) if val else 0)
+            matrix.append(row)
 
         try:
-            rows = float(request.POST.get('rows'))
-            cols = float(request.POST.get('cols'))
-            matrix = []
-            for i in range(int(rows)):
-                row = []
-                for j in range(int(cols)):
-                    val = request.POST.get(f'cell_{i}_{j}')
-                    row.append(float(val) if val else 0)
-                matrix.append(row)
-                
-                result = Choleski.choleski(matrix)
-                return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
-
+            result = Choleski.choleski(matrix)
+            return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
         except ValueError as e:
-            return render(request, 'Methods_Templates/Choleski.html',
-                          {'page': 'Layouts/layout_nav_bar.html', 'mensaje': e, 'alerta': 'Fallo'})
+            error_message = str(e)
+            print("Error:", error_message)
+            return render(request, 'Methods_Templates/Choleski.html',  {'alerta': 'Fallo', 'mensaje': error_message})
+
     return render(request, 'Methods_Templates/Choleski.html')
+
 
 def crout(request):
     if request.method == 'POST':
@@ -371,6 +376,52 @@ def gauss_seidel(request):
                           {'alerta': 'Fallo', 'mensaje': 'Ha ocurrido un error'})
 
     return render(request, 'Methods_Templates/GausSeidel.html')
+
+
+
+def jacobi(request):
+    if request.method == 'POST':
+        try:
+            rows = int(request.POST.get('rows'))
+
+            # Obtener valores de la matriz
+            matrix = []
+            for i in range(rows):
+                row = []
+                for j in range(rows):
+                    val = request.POST.get(f'cell_{i}_{j}')
+                    row.append(int(val) if val else 0)
+                matrix.append(row)
+
+            # Obtener valores del vector B
+            vector_b = []
+            for i in range(rows):
+                val = request.POST.get(f'b_{i}')
+                vector_b.append(int(val) if val else 0)
+
+            # Obtener valores del vector X0
+            vector_x0 = []
+            for i in range(rows):
+                val = request.POST.get(f'x0_{i}')
+                vector_x0.append(int(val) if val else 0)
+
+            tol = float(request.POST.get('tol'))
+            niter = int(request.POST.get('niter'))
+
+            html,resultado, n = JacobiM.Jacobi_view(matrix, vector_b, vector_x0, tol, niter)
+
+            if not JacobiM.diagonal_dominante(np.array(matrix)) and not JacobiM.radio_espectral(np.array(matrix)):
+                return render(request, 'Methods_Templates/Jacobi.html',
+                              {'alerta': 'Fallo', 'mensaje': 'La matriz no es diagonalmente dominante y no cumple con el radio espectral', 'result': resultado, 'iteraciones':n})
+
+            return render(request, 'Methods_Templates/Jacobi.html',
+                          {'result': resultado, 'iteraciones':n, 'html':html})
+        
+        except:
+            return render(request, 'Methods_Templates/Jacobi.html',
+                          {'alerta': 'Fallo', 'mensaje': 'Ha ocurrido un error'})
+
+    return render(request, 'Methods_Templates/Jacobi.html')
 
 
 #----------------------------- Views of the third chapter ------------------------------

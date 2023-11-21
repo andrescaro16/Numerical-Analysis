@@ -38,6 +38,8 @@ urlpatterns = [
     path('SOR/', SOR_method, name='SOR'),
     #Url para el metodo de Gauss Seidel
     path('gauss_seidel/', gauss_seidel, name='gauss_seidel_matrix'),
+    #Url para el metodo de jacobi 
+    path('jacobi/', jacobi, name='Jacobi'),
 
 
     ##--- urlpatterns for chapter 3 ---##
