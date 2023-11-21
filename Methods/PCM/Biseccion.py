@@ -5,13 +5,16 @@ import sympy
 
 import sympy
 
-def bisection(fx: str, a: float, b: float, tol: float, niter: int, et: str) -> tuple:
-    x = sympy.symbols('x')
-    f = sympy.sympify(fx)
+def biseccion(fx: str, a: float, b: float, tol: float, niter: int, et: str) -> tuple:
+    tabla = pd.DataFrame(columns=['Iteraciones', 'a', 'b', 'f(c)', 'Error'])
+
+    sympy_exp = latex2sympy(fx)
+    fn = sympy.sympify(sympy_exp)
     
-    fa = f.subs(x, a)
-    fb = f.subs(x, b)
-    
+    fa = fn.subs({'x': a}).evalf()
+    fb = fn.subs({'x': b}).evalf()
+
+
     if fa * fb > 0:
         raise ValueError('La función debe cambiar de signo en el intervalo')
     
@@ -27,7 +30,7 @@ def bisection(fx: str, a: float, b: float, tol: float, niter: int, et: str) -> t
     
     while er > tol and i <= niter:
         c = (a+b)/2
-        fc = f.subs(x, c)
+        fc = fn.subs({'x': c}).evalf()
         
         if fc == 0 or sympy.Abs(fc) < tol:
             break
@@ -44,5 +47,8 @@ def bisection(fx: str, a: float, b: float, tol: float, niter: int, et: str) -> t
             er = sympy.Abs((b-a)/a)
         
         i += 1
+        tabla = tabla._append({'Iteraciones':i, 'a':a, 'b':b, 'f(c)':fc, 'Error':er}, ignore_index=True)
+
     
-    return c, i, er
+    html = tabla.to_html()
+    return html, f'El método convergió a la solución {c}'

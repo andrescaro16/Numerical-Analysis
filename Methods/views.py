@@ -229,20 +229,24 @@ def doolittle(request):
 
 def choleski(request):
     if request.method == 'POST':
-        rows = float(request.POST.get('rows'))
-        cols = float(request.POST.get('cols'))
-        
-        matrix = []
-        for i in range(int(rows)):
-            row = []
-            for j in range(int(cols)):
-                val = request.POST.get(f'cell_{i}_{j}')
-                row.append(float(val) if val else 0)
-            matrix.append(row)
-        result = Choleski.choleski(matrix)
 
-        return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
-    
+        try:
+            rows = float(request.POST.get('rows'))
+            cols = float(request.POST.get('cols'))
+            matrix = []
+            for i in range(int(rows)):
+                row = []
+                for j in range(int(cols)):
+                    val = request.POST.get(f'cell_{i}_{j}')
+                    row.append(float(val) if val else 0)
+                matrix.append(row)
+                
+                result = Choleski.choleski(matrix)
+                return render(request, 'Methods_Templates/Choleski.html', {'matrix': matrix, 'result': result})
+
+        except ValueError as e:
+            return render(request, 'Methods_Templates/Choleski.html',
+                          {'page': 'Layouts/layout_nav_bar.html', 'mensaje': e, 'alerta': 'Fallo'})
     return render(request, 'Methods_Templates/Choleski.html')
 
 def crout(request):
