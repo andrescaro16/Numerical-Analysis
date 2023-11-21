@@ -1,5 +1,5 @@
 {% extends 'Layouts/layout_nav_bar.html' %}
-
+{% load static %}
 {% block title %}Newton Interpolante{% endblock %}
 
 {% block content %}
@@ -43,6 +43,9 @@
             <div class="bg-blue-100 border border-blue-500 rounded-md p-4" role="alert">
                 <p class="text-md text-blue-700">El polinomio resultante es: ‎ ‎ ‎ ‎ <strong>{{ result }}</strong></p>
             </div>
+            {% if plot %}
+                <img src="{% static 'img/newton_interpolante.png' %}">
+            {% endif %}
         {% endif %}
     </div>
 </div>
