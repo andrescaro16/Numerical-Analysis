@@ -1,5 +1,6 @@
 import numpy as np
 
+# A = LU
 def doolittle_function(A):
     n = len(A)
     L = np.eye(n)  # Inicializa la matriz L como una matriz identidad
@@ -17,5 +18,4 @@ def doolittle_function(A):
                 suma = sum(L[k][j] * U[j][i] for j in range(i))
                 L[k][i] = (A[k][i] - suma) / U[i][i]
 
-    return (L, U)
-
+    return (L, U) # Matriz triangular infefrior y Matriz triangular superior
