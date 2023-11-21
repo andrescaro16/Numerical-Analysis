@@ -277,6 +277,13 @@ def SOR_method(request):
         niter = int(request.POST['niter'])
         w = float(request.POST['w'])
 
+        if rows != cols:
+            error_message = "El número de filas debe ser igual al número de columnas"
+            return render(request, 'Methods_Templates/SOR.html',  {'alerta': 'Fallo', 'mensaje': error_message})
+        if w <= 0 or w >= 2:
+            error_message = "El parametro 'w' debe ser un valor entre 0 y 2"
+            return render(request, 'Methods_Templates/SOR.html', {'alerta': 'Fallo', 'mensaje': error_message})
+        
         siFallo = False
 
         A = []
@@ -287,6 +294,10 @@ def SOR_method(request):
                 cell_value = float(request.POST[cell_name])
                 row.append(cell_value)
             A.append(row)
+
+        if not Gauss_Seidel.diagonal_dominante(np.array(A)):
+            return render(request, 'Methods_Templates/SOR.html',
+                          {'alerta': 'Fallo', 'mensaje': 'La matriz no es diagonalmente dominante'})
 
         # Obtener el vector b
         b = []

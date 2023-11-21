@@ -61,6 +61,15 @@
             width: 100%;
             margin-bottom: 10px;
         }
+
+        .relajacion p{
+            margin-bottom: 1px;
+        }
+
+        .relajacion{
+            margin-top: -10px;
+            padding-bottom: 30px;
+        }
     </style>
 </head>
 
@@ -94,13 +103,17 @@
                     <input type="number" name="niter" placeholder="Número de Iteraciones" id="niter"
                         class="form-control mb-3" required>
                     <input type="text" name="w" placeholder="Parámetro w" id="w" class="form-control mb-3" required>
+                    <div class="relajacion">
+                        <p>0&lt;w&lt;1 para relajacion </p>
+                        <p>1&lt;w&lt;2 para subrelajacion </p>
+                        <p>w = 1 para esquema de iteración Gauss-Seidel estándar (sin factor de relajacion) </p>
+                    </div>
                     <button type="submit" class="btn btn-primary">Calcular</button>
                 </div>
             </form>
         </div>
         <!-- Right Side: Results -->
         <div class="results-container right-container">
-            <!-- Mostrar resultados aquí -->
             <h1>Resultados de las iteraciones</h1>
             {% if siFallo %}
             <h4>Fracasó en {{ iterations|length }} iteraciones</h4>
@@ -127,7 +140,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 
