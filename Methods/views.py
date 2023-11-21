@@ -1,5 +1,10 @@
+import numpy as np
+import matplotlib as plt
+import os
+import base64
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.conf import settings
 from .PCM import (
     Regla_Falsa, 
     Busqueda_incremental, 
@@ -15,6 +20,7 @@ from .PCM import (
     Gauss_Seidel, 
     Vandermonde,
     Lagrange,
+    Newton_interpolante,
 )
 
 
@@ -376,3 +382,38 @@ def lagrange(request):
         return render(request, 'Methods_Templates/Lagrange.html', {'X_values': X_values, 'Y_values': Y_values, 'result': str(result), 'divisorL': divisorL})
 
     return render(request, 'Methods_Templates/Lagrange.html')
+
+
+def newton_interpolante(request):
+    if request.method == 'POST':
+        try:
+            X_values = request.POST.get('X_values')
+            Y_values = request.POST.get('Y_values')
+
+            X = [float(x) for x in X_values.split(',')]
+            Y = [float(y) for y in Y_values.split(',')]
+
+            if not Newton_interpolante.is_function(X):
+                return render(request, 'Methods_Templates/newton_interpolante.html',
+                                  {'X_values': X_values, 'Y_values': Y_values, 'alerta': 'Fallo', 'mensaje': 'Los valores de X deben ser distintos', 'plot': False})
+
+            x = np.array(X)
+            y = np.array(Y)
+            coef = Newton_interpolante.diferencias_divididas(x, y)[0, :]
+
+            cot_inf = np.min(x)
+            cot_sup = np.max(x)
+
+            x_new = np.arange(cot_inf, cot_sup + 0.1, 0.1)
+            y_new = Newton_interpolante.newton_poli(coef, x, x_new)
+            polinomio = Newton_interpolante.print_newton_poly(coef, x)
+
+            Newton_interpolante.create_plot(x, y, x_new, y_new)
+
+            return render(request, 'Methods_Templates/newton_interpolante.html',
+                              {'X_values': X_values, 'Y_values': Y_values, 'result': polinomio,'plot': True})
+        except:
+            return render(request, 'Methods_Templates/newton_interpolante.html',
+                          {'X_values': X_values, 'Y_values': Y_values, 'alerta': 'Fallo', 'mensaje': 'Ha ocurrido un error', 'plot': False})
+
+    return render(request, 'Methods_Templates/newton_interpolante.html', {'plot': False})
