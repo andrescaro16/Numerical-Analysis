@@ -77,11 +77,11 @@ def incremental_search(request):
             expresion = request.POST['latexinput']
             tol = float(request.POST['toleranciam'])
             a = float(request.POST['ai'])
-            b = float(request.POST['bi'])
+            #b = float(request.POST['bi'])
             k = int(request.POST['iteracionm'])
             #et = request.POST['tipoe']
 
-            tupla = Busqueda_incremental.busqueda_incremental(expresion, a, b, tol, k)
+            tupla = Busqueda_incremental.busqueda_incremental(expresion, a, tol, k)
             return render(request, 'Methods_Templates/incrementalSearch.html',
                           {'page': 'Layouts/layout_nav_bar.html', 'expresion': 'Incremental Search Method', 'html': tupla[0], 'mensaje_m': tupla[1]})
         except ValueError as e:
