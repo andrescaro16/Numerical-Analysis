@@ -21,7 +21,7 @@ def newton_rapshon(fx: str, a: float, tol: float, k: int, et: str) -> tuple:
 
         # Verificar si la derivada es muy cercana a cero
         if sympy.Abs(y_prime) < 0.00000007:
-            break
+             raise ValueError('La derivada de la funcion es muy cercana a cero')
 
         # Calculamos valor de la funcion
         x_act = fn.subs({'x': x})
